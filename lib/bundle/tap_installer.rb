@@ -17,7 +17,7 @@ module Bundle
         Bundle.system HOMEBREW_BREW_FILE, "tap", name, verbose: verbose
       end
 
-      return :failed unless success
+      return :aborted unless success
 
       installed_taps << name
       :success

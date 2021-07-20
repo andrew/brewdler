@@ -56,5 +56,14 @@ describe Bundle::Commands::Install do
 
       expect { described_class.run }.to raise_error(SystemExit)
     end
+
+    it "exits early on a tap failure" do
+      expect(Bundle::BrewInstaller).not_to receive(:install)
+
+      allow(Bundle::TapInstaller).to receive(:install).and_return(:aborted)
+      allow_any_instance_of(Pathname).to receive(:read).and_return(brewfile_contents)
+
+      expect { described_class.run }.to raise_error(SystemExit)
+    end
   end
 end

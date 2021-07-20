@@ -46,6 +46,13 @@ describe Bundle::TapInstaller do
                                           .and_return(true)
         expect(do_install(clone_target: "clone_target_path")).to be(:success)
       end
+
+      it "fails" do
+        expect(Bundle).to receive(:system).with(HOMEBREW_BREW_FILE, "tap", "homebrew/cask", "clone_target_path",
+                                                verbose: false)
+                                          .and_return(false)
+        expect(do_install(clone_target: "clone_target_path")).to be(:aborted)
+      end
     end
   end
 end
